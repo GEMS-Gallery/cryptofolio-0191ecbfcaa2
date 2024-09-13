@@ -5,6 +5,9 @@ import type { IDL } from '@dfinity/candid';
 export interface Holding {
   'currentPrice' : number,
   'purchasePrice' : number,
+  'marketValue' : number,
+  'name' : string,
+  'performance' : number,
   'quantity' : number,
   'assetType' : string,
   'symbol' : string,

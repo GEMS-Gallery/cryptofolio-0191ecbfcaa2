@@ -2,6 +2,9 @@ export const idlFactory = ({ IDL }) => {
   const Holding = IDL.Record({
     'currentPrice' : IDL.Float64,
     'purchasePrice' : IDL.Float64,
+    'marketValue' : IDL.Float64,
+    'name' : IDL.Text,
+    'performance' : IDL.Float64,
     'quantity' : IDL.Float64,
     'assetType' : IDL.Text,
     'symbol' : IDL.Text,

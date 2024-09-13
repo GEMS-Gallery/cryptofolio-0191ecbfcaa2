@@ -2,6 +2,9 @@ type Holding =
  record {
    assetType: text;
    currentPrice: float64;
+   marketValue: float64;
+   name: text;
+   performance: float64;
    purchasePrice: float64;
    quantity: float64;
    symbol: text;
