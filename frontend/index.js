@@ -1,10 +1,14 @@
-import { backend } from 'declarations/backend';
+import { backend } from './declarations/backend';
 
 let holdings = [];
 
 async function refreshHoldings() {
-  holdings = await backend.getHoldings();
-  renderHoldings();
+  try {
+    holdings = await backend.getHoldings();
+    renderHoldings();
+  } catch (error) {
+    console.error("Error fetching holdings:", error);
+  }
 }
 
 function renderHoldings() {
@@ -27,29 +31,41 @@ function renderHoldings() {
 
 async function addHolding(event) {
   event.preventDefault();
-  const holding = {
-    name: document.getElementById('name').value,
-    symbol: document.getElementById('name').value,
-    quantity: parseFloat(document.getElementById('quantity').value),
-    purchasePrice: parseFloat(document.getElementById('purchasePrice').value),
-    currentPrice: parseFloat(document.getElementById('purchasePrice').value),
-    marketValue: parseFloat(document.getElementById('quantity').value) * parseFloat(document.getElementById('purchasePrice').value),
-    performance: 0,
-    assetType: document.getElementById('assetType').value,
-  };
-  await backend.addHolding(holding);
-  await refreshHoldings();
-  event.target.reset();
+  try {
+    const holding = {
+      name: document.getElementById('name').value,
+      symbol: document.getElementById('name').value,
+      quantity: parseFloat(document.getElementById('quantity').value),
+      purchasePrice: parseFloat(document.getElementById('purchasePrice').value),
+      currentPrice: parseFloat(document.getElementById('purchasePrice').value),
+      marketValue: parseFloat(document.getElementById('quantity').value) * parseFloat(document.getElementById('purchasePrice').value),
+      performance: 0,
+      assetType: document.getElementById('assetType').value,
+    };
+    await backend.addHolding(holding);
+    await refreshHoldings();
+    event.target.reset();
+  } catch (error) {
+    console.error("Error adding holding:", error);
+  }
 }
 
 async function removeHolding(index) {
-  await backend.removeHolding(index);
-  await refreshHoldings();
+  try {
+    await backend.removeHolding(index);
+    await refreshHoldings();
+  } catch (error) {
+    console.error("Error removing holding:", error);
+  }
 }
 
 async function updatePrices() {
-  await backend.updatePrices();
-  await refreshHoldings();
+  try {
+    await backend.updatePrices();
+    await refreshHoldings();
+  } catch (error) {
+    console.error("Error updating prices:", error);
+  }
 }
 
 function searchHoldings() {
@@ -79,8 +95,13 @@ function renderFilteredHoldings(filteredHoldings) {
   });
 }
 
-document.getElementById('addHoldingForm').addEventListener('submit', addHolding);
-document.getElementById('updatePrices').addEventListener('click', updatePrices);
-document.getElementById('searchBar').addEventListener('input', searchHoldings);
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('addHoldingForm').addEventListener('submit', addHolding);
+  document.getElementById('updatePrices').addEventListener('click', updatePrices);
+  document.getElementById('searchBar').addEventListener('input', searchHoldings);
+  
+  refreshHoldings();
+});
 
-refreshHoldings();
+// Make functions globally accessible
+window.removeHolding = removeHolding;
