@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock/Crypto Holdings App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input, select, button {
+            padding: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stock/Crypto Holdings</h1>
+    <form id="addHoldingForm">
+        <select id="assetType" required>
+            <option value="">Select Asset Type</option>
+            <option value="Stock">Stock</option>
+            <option value="Crypto">Crypto</option>
+        </select>
+        <input type="text" id="symbol" placeholder="Symbol" required>
+        <input type="number" id="quantity" placeholder="Quantity" step="0.01" required>
+        <input type="number" id="purchasePrice" placeholder="Purchase Price" step="0.01" required>
+        <button type="submit">Add Holding</button>
+    </form>
+    <button id="updatePrices">Update Prices</button>
+    <table id="holdingsTable">
+        <thead>
+            <tr>
+                <th>Asset Type</th>
+                <th>Symbol</th>
+                <th>Quantity</th>
+                <th>Purchase Price</th>
+                <th>Current Price</th>
+                <th>Total Value</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script src="index.js"></script>
+</body>
+</html>
